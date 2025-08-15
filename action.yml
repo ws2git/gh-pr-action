@@ -1,0 +1,28 @@
+name: 'Create PR with GH CLI'
+description: 'Action para abrir PR entre branches usando GitHub CLI'
+author: 'rmottainfo'
+inputs:
+  title:
+    description: 'Título do PR'
+    required: true
+  body:
+    description: 'Corpo do PR'
+    required: true
+  source_branch:
+    description: 'Branch de origem'
+    required: true
+  dest_branch:
+    description: 'Branch de destino'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Run create-pr.sh
+      shell: bash
+      run: |
+        chmod +x ${{ github.action_path }}/create-pr.sh
+        ${{ github.action_path }}/create-pr.sh \
+          "${{ inputs.title }}" \
+          "${{ inputs.body }}" \
+          "${{ inputs.source_branch }}" \
+          "${{ inputs.dest_branch }}"
